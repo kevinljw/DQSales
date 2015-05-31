@@ -30,6 +30,7 @@ function init(){
         document.getElementById("loginRegisterDiv").style.display='none';
 		document.getElementById("productsDiv").style.display='block';
 		document.getElementById("infoDiv").style.display='block';
+        _diqi.token=cookieValue;
 	}
 
 	
@@ -37,9 +38,18 @@ function init(){
     function display(id){
         document.getElementById("productsDiv").style.display='none';
         document.getElementById("productDetailDiv").style.display='block';
-        document.getElementById("productName").innerHTML = "Product Name";
-        document.getElementById("productPrice").innerHTML = "product price";
-        document.getElementById("productPicture").src = "Product Name";
+        var infoArray=getFromId(id);
+          console.log(getFromId(id));
+        document.getElementById("productName").innerHTML = infoArray.Name;
+        document.getElementById("productPrice").innerHTML = infoArray.Price;
+        document.getElementById("productPicture").src = infoArray.Pic;
+        document.getElementById("productId").src = id;
+        
+    }
+    function purchase(){
+        
+        diqiPay(document.getElementById("productId").innerHTML,document.getElementById("productPrice").innerHTML);
+        
     }
 function createCookie(name, value, days) {
     var expires;
@@ -89,6 +99,12 @@ function getBalance(){
 	document.getElementById("productsDiv").style.display='none';
 	document.getElementById("balanceDiv").style.display='block';
     document.getElementById("productDetailDiv").style.display='none';
+    document.getElementById("sellDiv").style.display='none';
+     document.getElementById("sellDisplayDiv").style.display='none';
+    diqiGetPrimaryAddress(function(addr, bal) {
+        bal.balance;
+        document.getElementById("balanceText").innerHTML="Your current Acorn balance is:"+bal.balance;
+    });
 	
 }
 
@@ -96,8 +112,29 @@ function showProducts(){
 	document.getElementById("productsDiv").style.display='block';
 	document.getElementById("balanceDiv").style.display='none';
     document.getElementById("productDetailDiv").style.display='none';
+    document.getElementById("sellDiv").style.display='none';
+     document.getElementById("sellDisplayDiv").style.display='none';
 	
 }
+    function sell(){
+        document.getElementById("productsDiv").style.display='none';
+	document.getElementById("balanceDiv").style.display='none';
+    document.getElementById("productDetailDiv").style.display='none';
+        document.getElementById("sellDiv").style.display='block';
+         document.getElementById("sellDisplayDiv").style.display='none';
+    }
+    function sellDisplay(){
+        document.getElementById("productsDiv").style.display='none';
+	document.getElementById("balanceDiv").style.display='none';
+    document.getElementById("productDetailDiv").style.display='none';
+        document.getElementById("sellDiv").style.display='none';
+        document.getElementById("sellDisplayDiv").style.display='block';
+        diqiCreateAddress(function(add){
+        document.getElementById("sellText").innerHTML="please copy the following text to Facebook<br>"+"[I] "+document.getElementById("productNameSell").value+"<br>[P]  "+document.getElementById("productPriceSell").value+"<br>[A] "+add;
+        });
+        
+
+    }
 
 
 
@@ -123,17 +160,31 @@ function showProducts(){
 <div id="infoDiv" style="display:none">
 <button onclick="getBalance()">My Balance</button>
 <button onclick="showProducts()">Products</button>
+<button onclick="sell()">Sell Something</button>
 
 </div>
     <div id="productDetailDiv" style="display:none">
 <p id="productName"></p>
         <p id="productPrice"></p>
+        <p id="productId"></p>
         <img src="" alt="Product picture" id="productPicture">
+        <button onclick="purchase()">Purchase</button>
         
 </div>
 </div>
 <div id="balanceDiv" style="display:none">
-<p>Your current Acorn balance is: </p>
+<p id="balanceText">Your current Acorn balance is: </p>
+
+</div>
+<div id="sellDiv" style="display:none">
+<p><input type="text" id="productNameSell" name="" value="" placeholder="Product Name"></p>
+        <p><input type="text" id="productPriceSell" name="" value="" placeholder="Price"></p>
+        <p class="submit">
+		<input type="submit" name="commit" value="Sell" onclick="sellDisplay()" ></p>
+
+</div>
+<div id="sellDisplayDiv" style="display:none">
+    <p id="sellText"></p>
 
 </div>
 <div id="loginDiv" style="display:none">
