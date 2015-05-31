@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+	_diqi = {'token': null, color: 20 }
+
+	function diqiLogin(username, password, callback) {
+		var param = {'username': username, 'password': password}
+		jQuery.ajax('https://api.diqi.us/api/v0/accounts/token', {
+			method: 'POST',
+			data: param,
+			success: function(data) {
+				console.log(data)
+				_diqi.token = data.token
+				if (callback) callback(data)
+			}
+		})
+	}
+
+	function diqiCreateAddress(address, callback) {
+		jQuery.ajax('https://api.diqi.us/api/v0/accounts/addresses', {
+			method: 'POST',
+			headers: {
+				'Authorization': ('Token '+_diqi.token)
+			},
+			success: function(data) {
+				console.log(data)
+				if (callback) callback(data)
+			}
+		})
+	}
+
+	function diqiGetBalance(address, callback) {
+		jQuery.ajax('https://api.diqi.us/api/v0/analytics/addresses/'+address+'/color/'+_diqi.color, {
+			method: 'GET',
+			success: function(data) {
+				console.log(data)
+				if (callback) callback(data.balances.length > 0 ? data.balances[0] : {"balance": 0})
+			}
+		})
+	}
+	//]]>
+    </script>
+
+</head>
+<body>
+
+
+	
+<button onclick="diqiLogin('acorn','17D87q6Z70344z9sry3ZEb1680wSbU17vqj760b7yA599kkgC792706VPczD3z8I')">Login</button>
+<button onclick="diqiCreateAddress(function(data) { console.log(data.address) })">Create Address</button>
+<button onclick="diqiGetBalance('1EQhbYZjemugYCQ5fNtmro1svngMSqRei4', function(data) { console.log(data.balance) })">Get Balance</button>
+
+
+</body>
+</html>
