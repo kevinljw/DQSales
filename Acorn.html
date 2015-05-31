@@ -126,9 +126,10 @@ function showProducts(){
     document.getElementById("productDetailDiv").style.display='none';
         document.getElementById("sellDiv").style.display='block';
         diqiCreateAddress(function(add){
-        document.getElementById("sellText").innerHTML="please copy the following text to Facebook<br>"+"[I] "+document.getElementById("productNameSell").value+"<br>[P]  "+document.getElementById("productPriceSell").value+"<br>[A] "+add;
+        document.getElementById("sellText").innerHTML="[I] "+document.getElementById("productNameSell").value+"\n[P]  "+document.getElementById("productPriceSell").value+"\n[A] "+add;
         });
-        
+        Copied = document.getElementById("sellText").createTextRange();
+        Copied.execCommand("Copy");
 
     }
 
@@ -177,9 +178,18 @@ function showProducts(){
         <p><input type="text" id="productPriceSell" name="" value="" placeholder="Price"></p>
         <p class="submit">
 		<input type="submit" name="commit" value="Sell" onclick="sellDisplay()" ></p>
-    <p id="sellText"></p>
+    <p>please copy the following text to Facebook<br></p>
+    <textarea rows="5" cols="50" wrap="hard" id="sellText"></textarea>
 
 </div>
+
+
+
+
+
+
+
+
 
 <div id="loginDiv" style="display:none">
         <p><input type="text" id="account" name="Account" value="" placeholder="Account"></p>
