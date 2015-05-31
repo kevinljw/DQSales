@@ -1,0 +1,30 @@
+#header {
+    background-color:black;
+    color:white;
+    text-align:left;
+    padding:5px;
+}
+#loginRegisterDiv{
+    background-color:brown;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+h1 {
+    color: #CF9211;
+}
+
+p.ex {
+    color: rgb(0,0,255);
+}
+#loginDiv {
+background-color: white;
+box-shadow: 10px 10px 5px #888888;
+border-radius: 15px;
+    padding: 20px; 
+    width: 200px;
+    height: 150px; 
+	margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
