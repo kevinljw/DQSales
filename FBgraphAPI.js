@@ -74,22 +74,25 @@ function ShowContent(targetURL){
                 
             });
 //                console.log(itemStack);
-//           var testId='3984785743895743895';
-//                console.log(getFromId(testId));
+//           var testId='123217126332221';
+//                var newOne=getFromId(testId);
+//                console.log(newOne.Name);
             
         });
 }
 function getFromId(thisId){
-    itemStack.forEach(function(AElement){
+    var newEntity;
+    itemStack.some(function(AElement){
         if(AElement.Account==thisId){
-            console.log("t");
-             var newEntity={
+//            console.log("t");
+             newEntity={
                 "Name": AElement.Name,
                     "Price": AElement.Price,
                     "Pic": AElement.Pic
              }
-             return newEntity;
+            return true;
         }
-    })
+    });
+     return newEntity;
    
 }
