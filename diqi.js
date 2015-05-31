@@ -16,7 +16,7 @@ function diqiLogin(username, password, callback, errorCallback) {
     })
 }
 
-function diqiCreateAddress(address, callback) {
+function diqiCreateAddress(callback) {
     jQuery.ajax('https://api.diqi.us/api/v0/accounts/addresses', {
         method: 'POST',
         headers: {
