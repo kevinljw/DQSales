@@ -36,7 +36,10 @@ function init(){
 }
     function display(id){
         document.getElementById("productsDiv").style.display='none';
-        
+        document.getElementById("productDetailDiv").style.display='block';
+        document.getElementById("productName").innerHTML = "Product Name";
+        document.getElementById("productPrice").innerHTML = "product price";
+        document.getElementById("productPicture").src = "Product Name";
     }
 function createCookie(name, value, days) {
     var expires;
@@ -85,12 +88,14 @@ function diqiLogin2() {
 function getBalance(){
 	document.getElementById("productsDiv").style.display='none';
 	document.getElementById("balanceDiv").style.display='block';
+    document.getElementById("productDetailDiv").style.display='none';
 	
 }
 
 function showProducts(){
 	document.getElementById("productsDiv").style.display='block';
 	document.getElementById("balanceDiv").style.display='none';
+    document.getElementById("productDetailDiv").style.display='none';
 	
 }
 
@@ -108,6 +113,7 @@ function showProducts(){
 <img src="acorn.png" alt="Acorn" style="width:150px;height:100px;float: left;"><h1>Acorn</h1>
 <br />
 </div>
+    
 <div id="loginRegisterDiv">
 <button onclick="Login()">Login</button>
 <button onclick="Register()">Register</button>
@@ -118,6 +124,12 @@ function showProducts(){
 <button onclick="getBalance()">My Balance</button>
 <button onclick="showProducts()">Products</button>
 
+</div>
+    <div id="productDetailDiv" style="display:none">
+<p id="productName"></p>
+        <p id="productPrice"></p>
+        <img src="" alt="Product picture" id="productPicture">
+        
 </div>
 </div>
 <div id="balanceDiv" style="display:none">
