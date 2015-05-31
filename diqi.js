@@ -24,7 +24,7 @@ function diqiCreateAddress(callback) {
         },
         success: function(data) {
             console.log(data)
-            if (callback) callback(data)
+            if (callback) callback(data.address)
         }
     })
 }
