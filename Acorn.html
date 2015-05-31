@@ -31,11 +31,16 @@ function init(){
 		document.getElementById("productsDiv").style.display='block';
 		document.getElementById("infoDiv").style.display='block';
         _diqi.token=cookieValue;
+        diqiGetPrimaryAddress(function(addr, bal) {
+        bal.balance;
+        document.getElementById("balanceText").innerHTML="Your current Acorn balance is:"+bal.balance;
+    });
 	}
 
 	
 }
     function display(id){
+        console.log(id);
         document.getElementById("productsDiv").style.display='none';
         document.getElementById("productDetailDiv").style.display='block';
         var infoArray=getFromId(id);
@@ -43,12 +48,27 @@ function init(){
         document.getElementById("productName").innerHTML = infoArray.Name;
         document.getElementById("productPrice").innerHTML = infoArray.Price;
         document.getElementById("productPicture").src = infoArray.Pic;
-        document.getElementById("productId").src = id;
+        document.getElementById("productId").innerHTML = id;
         
     }
     function purchase(){
+        console.log("hllo "+document.getElementById("productId").innerHTML);
+        diqiGetBalance(document.getElementById("productId").innerHTML,function(add,bal){
+            console.log("rein"+bal);
+        if(bal.balance>0){
+            alert("Item has been sold");
+            
+        }else{
+        diqiPay(document.getElementById("productId").innerHTML,document.getElementById("productPrice").innerHTML.replace("$",""),function(){
+        alert("Success");
+        location.reload();
+        },function(){alert("Failure");
+        location.reload();});
+        }
+        });
         
-        diqiPay(document.getElementById("productId").innerHTML,document.getElementById("productPrice").innerHTML);
+        
+        
         
     }
 function createCookie(name, value, days) {
@@ -126,7 +146,7 @@ function showProducts(){
     document.getElementById("productDetailDiv").style.display='none';
         document.getElementById("sellDiv").style.display='block';
         diqiCreateAddress(function(add){
-        document.getElementById("sellText").innerHTML="[I] "+document.getElementById("productNameSell").value+"\n[P]  "+document.getElementById("productPriceSell").value+"\n[A] "+add;
+        document.getElementById("sellText").innerHTML="[I] "+document.getElementById("productNameSell").value+"\n[P] "+document.getElementById("productPriceSell").value+"\n[A] "+add;
         });
         Copied = document.getElementById("sellText").createTextRange();
         Copied.execCommand("Copy");
