@@ -2,6 +2,10 @@ var msgArray = [];
 var MaxChar = 600;
 var defaultUrl = '/feed';
 var pageId = '725926024200300';
+var getItemRe =/\[I\]\s(\S+)\s/;
+var getPriceRe =/\[P\]\s(\S+)\s/;
+var getAccountRe =/\[A\]\s(\S+)/;
+
 window.fbAsyncInit = function() {
         FB.init({
           appId      : '1452922868355265',
@@ -11,7 +15,7 @@ window.fbAsyncInit = function() {
      
     
         var msgCount;
-        ShowArticles(pageId+defaultUrl); 
+        ShowContent(pageId+defaultUrl); 
 
 };
 
@@ -25,18 +29,35 @@ window.fbAsyncInit = function() {
 );
 
 
-function ShowArticles(targetURL){
+function ShowContent(targetURL){
             FB.api(targetURL,{access_token : "1452922868355265|G8GIKRZE9P_6HGnNM5qIDGC5B2I"}, function(response) {
-            console.log(response);
+//            console.log(response);
             msgCount = 0;
+           
             response.data.forEach(function(AElement){
                 
                 if(typeof(AElement.message) != "undefined"){
-                        document.getElementById("bcont").innerHTML+=AElement.message;
+                var onePost=AElement.message;
+                var thisItemMatch=onePost.match(getItemRe); 
+                    var thisPriceMatch=onePost.match(getPriceRe); 
+                    var thisAccountMatch=onePost.match(getAccountRe); 
+                
+//                var Iindexof=AElement.message.indexOf("[I]")+4;
+//                var Pindexof=AElement.message.indexOf("[P]")+4;
+//                var Aindexof=AElement.message.indexOf("[A]")+4;
+//                    
+//                if(Iindexof>-1){
+//                   var salesProduct=onePost.slice(Iindexof,onePost.substr(Iindexof).indexOf("\r")); 
+//                    console.log(onePost.substr(Iindexof).indexOf("\r"));
+////                    console.log(salesProduct);
+//                    
+//                }
+                        document.getElementById("bcont").innerHTML+="<tr><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
                         
                 }
                 
             });
+                
             
             
         });
