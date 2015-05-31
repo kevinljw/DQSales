@@ -2,9 +2,9 @@ var msgArray = [];
 var MaxChar = 600;
 var defaultUrl = '/feed';
 var pageId = '725926024200300';
-var getItemRe =/\[I\]\s(\S+)\s/;
-var getPriceRe =/\[P\]\s(\S+)\s/;
-var getAccountRe =/\[A\]\s(\S+)/;
+var getItemRe =/\[I\]\s*(\S+)\s/;
+var getPriceRe =/\[P\]\s*(\S+)\s/;
+var getAccountRe =/\[A\]\s*(\S+)/;
 var itemStack = [];
 window.fbAsyncInit = function() {
         FB.init({
@@ -68,7 +68,7 @@ function ShowContent(targetURL){
 ////                    console.log(salesProduct);
 //                    
 //                }
-                    document.getElementById("bcont").innerHTML+="<tr onclick=\"display("+thisAccountMatch[1]+")\"><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
+                    document.getElementById("bcont").innerHTML+="<tr onclick=\"display(\""+thisAccountMatch[1]+"\")\"><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
                         
                 }
                 
