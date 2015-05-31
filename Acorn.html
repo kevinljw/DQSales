@@ -100,7 +100,6 @@ function getBalance(){
 	document.getElementById("balanceDiv").style.display='block';
     document.getElementById("productDetailDiv").style.display='none';
     document.getElementById("sellDiv").style.display='none';
-     document.getElementById("sellDisplayDiv").style.display='none';
     diqiGetPrimaryAddress(function(addr, bal) {
         bal.balance;
         document.getElementById("balanceText").innerHTML="Your current Acorn balance is:"+bal.balance;
@@ -113,7 +112,6 @@ function showProducts(){
 	document.getElementById("balanceDiv").style.display='none';
     document.getElementById("productDetailDiv").style.display='none';
     document.getElementById("sellDiv").style.display='none';
-     document.getElementById("sellDisplayDiv").style.display='none';
 	
 }
     function sell(){
@@ -121,14 +119,12 @@ function showProducts(){
 	document.getElementById("balanceDiv").style.display='none';
     document.getElementById("productDetailDiv").style.display='none';
         document.getElementById("sellDiv").style.display='block';
-         document.getElementById("sellDisplayDiv").style.display='none';
     }
     function sellDisplay(){
         document.getElementById("productsDiv").style.display='none';
 	document.getElementById("balanceDiv").style.display='none';
     document.getElementById("productDetailDiv").style.display='none';
-        document.getElementById("sellDiv").style.display='none';
-        document.getElementById("sellDisplayDiv").style.display='block';
+        document.getElementById("sellDiv").style.display='block';
         diqiCreateAddress(function(add){
         document.getElementById("sellText").innerHTML="please copy the following text to Facebook<br>"+"[I] "+document.getElementById("productNameSell").value+"<br>[P]  "+document.getElementById("productPriceSell").value+"<br>[A] "+add;
         });
@@ -181,12 +177,10 @@ function showProducts(){
         <p><input type="text" id="productPriceSell" name="" value="" placeholder="Price"></p>
         <p class="submit">
 		<input type="submit" name="commit" value="Sell" onclick="sellDisplay()" ></p>
-
-</div>
-<div id="sellDisplayDiv" style="display:none">
     <p id="sellText"></p>
 
 </div>
+
 <div id="loginDiv" style="display:none">
         <p><input type="text" id="account" name="Account" value="" placeholder="Account"></p>
         <p><input type="password" id="pass" name="password" value="" placeholder="Password"></p>
