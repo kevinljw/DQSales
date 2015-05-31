@@ -1,4 +1,4 @@
-_diqi = {'token': null, color: 20, address: null }
+_diqi = {'token': null, color: 20, address: null, balance: null }
 
 function diqiLogin(username, password, callback, errorCallback) {
     var param = {'username': username, 'password': password}
@@ -8,6 +8,8 @@ function diqiLogin(username, password, callback, errorCallback) {
         success: function(data) {
             console.log(data)
             _diqi.token = data.token
+
+            diqiGetPrimaryAddress()
             if (callback) callback(data)
         },
         error: errorCallback
@@ -44,10 +46,12 @@ function diqiGetPrimaryAddress(callback) {
     diqiGetAddresses(function(addresses) {
         for (i = 0; i<addresses.length; i++) {
             var addr = addresses[i]
-            diqiGetBalance(addr, function(balance) {
-                if (_diqi.address == null || _diqi.address.received <= balance.received) {
+            console.log(addr)
+            diqiGetBalance(addr, function(addr, balance) {
+                if (_diqi.address == null || balance.received > _diqi.balance.received) {
                     _diqi.address = addr
-                    callback(_diqi.address)
+                    _diqi.balance = balance
+                    if (callback) callback(addr, balance)
                 }
             })
         }
@@ -59,7 +63,11 @@ function diqiGetBalance(address, callback) {
         method: 'GET',
         success: function(data) {
             console.log(data)
-            if (callback) callback(data.balances.length > 0 ? data.balances[0] : {"balance": 0, "received": 0, "sent": 0})
+            if (callback) callback(address, data.balances.length > 0 ? data.balances[0] : {"balance": 0, "received": 0, "sent": 0})
         }
     })
+}
+
+function diqiGetPrimaryBalance(callback) {
+    diqiGetBalance(_diqi.address, callback)
 }

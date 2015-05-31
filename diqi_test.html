@@ -7,7 +7,7 @@
 <body>
 
 <script type="text/javascript">
-_diqi.token = '60a3d25d5971b0beb9d2822321335e380edcaf22'	
+_diqi.token = '60a3d25d5971b0beb9d2822321335e380edcaf22'
 </script>
 
 
@@ -19,8 +19,9 @@ _diqi.token = '60a3d25d5971b0beb9d2822321335e380edcaf22'
 
 <button onclick="diqiGetAddresses(function(data) { console.log(data) })">Get Addresses</button>
 
-<button onclick="diqiGetPrimaryAddress(function(data) { console.log(data) })">Get Primary Address</button>
+<button onclick="diqiGetPrimaryAddress(function(addr, balance) { console.log(addr); console.log(balance); })">Get Primary Address</button>
 
+<button onclick="diqiGetPrimaryBalance(function(addr, balance) { console.log(addr); console.log(balance); })">Get Primary Balance</button>
 
 </body>
 </html>
