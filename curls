@@ -47,6 +47,20 @@ curl -X GET  https://api.diqi.us/api/v0/analytics/addresses/1EQhbYZjemugYCQ5fNtm
 
 
 
+curl -X POST \
+-d "username=acorn-seller&password=seller" \
+https://api.diqi.us/api/v0/accounts
+
+
+curl -X POST \
+-d "username=demo&password=demo" \
+https://api.diqi.us/api/v0/accounts
+
+
+curl -X GET  https://api.diqi.us/api/v0/analytics/addresses/19dUbsPv13tXN4zzqLANXymoDuCx8rsVj4/color/20
+
+
+
 
 
 curl -X POST \
