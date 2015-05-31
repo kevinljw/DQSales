@@ -27,12 +27,17 @@
 function init(){
    var cookieValue = readCookie("token");
 	if(cookieValue!=null){
+        document.getElementById("loginRegisterDiv").style.display='none';
 		document.getElementById("productsDiv").style.display='block';
 		document.getElementById("infoDiv").style.display='block';
 	}
 
 	
 }
+    function display(id){
+        document.getElementById("productsDiv").style.display='none';
+        
+    }
 function createCookie(name, value, days) {
     var expires;
 

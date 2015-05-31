@@ -52,7 +52,7 @@ function ShowContent(targetURL){
 ////                    console.log(salesProduct);
 //                    
 //                }
-                        document.getElementById("bcont").innerHTML+="<tr><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
+                        document.getElementById("bcont").innerHTML+="<tr onclick=\"display("+thisAccountMatch[1]+")\"><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
                         
                 }
                 
