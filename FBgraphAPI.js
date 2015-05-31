@@ -5,7 +5,7 @@ var pageId = '725926024200300';
 var getItemRe =/\[I\]\s(\S+)\s/;
 var getPriceRe =/\[P\]\s(\S+)\s/;
 var getAccountRe =/\[A\]\s(\S+)/;
-
+var itemStack = [];
 window.fbAsyncInit = function() {
         FB.init({
           appId      : '1452922868355265',
@@ -31,17 +31,33 @@ window.fbAsyncInit = function() {
 
 function ShowContent(targetURL){
             FB.api(targetURL,{access_token : "1452922868355265|G8GIKRZE9P_6HGnNM5qIDGC5B2I"}, function(response) {
-//            console.log(response);
+            
+            console.log(response);
             msgCount = 0;
-           
+            
+             
+                
             response.data.forEach(function(AElement){
                 
+                
+                
                 if(typeof(AElement.message) != "undefined"){
+                    
                 var onePost=AElement.message;
                 var thisItemMatch=onePost.match(getItemRe); 
                     var thisPriceMatch=onePost.match(getPriceRe); 
                     var thisAccountMatch=onePost.match(getAccountRe); 
-                
+                    
+                var thisEntity={
+                    "Name": thisItemMatch[1],
+                    "Price": thisPriceMatch[1],
+                    "Account": thisAccountMatch[1],
+                    "Pic": AElement.picture
+                    
+                  };
+                    
+                itemStack.push(thisEntity);
+                    
 //                var Iindexof=AElement.message.indexOf("[I]")+4;
 //                var Pindexof=AElement.message.indexOf("[P]")+4;
 //                var Aindexof=AElement.message.indexOf("[A]")+4;
@@ -52,13 +68,28 @@ function ShowContent(targetURL){
 ////                    console.log(salesProduct);
 //                    
 //                }
-                        document.getElementById("bcont").innerHTML+="<tr onclick=\"display("+thisAccountMatch[1]+")\"><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
+                    document.getElementById("bcont").innerHTML+="<tr onclick=\"display("+thisAccountMatch[1]+")\"><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
                         
                 }
                 
             });
-                
-            
+//                console.log(itemStack);
+//           var testId='3984785743895743895';
+//                console.log(getFromId(testId));
             
         });
+}
+function getFromId(thisId){
+    itemStack.forEach(function(AElement){
+        if(AElement.Account==thisId){
+            console.log("t");
+             var newEntity={
+                "Name": AElement.Name,
+                    "Price": AElement.Price,
+                    "Pic": AElement.Pic
+             }
+             return newEntity;
+        }
+    })
+   
 }
