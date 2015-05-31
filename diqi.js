@@ -71,3 +71,19 @@ function diqiGetBalance(address, callback) {
 function diqiGetPrimaryBalance(callback) {
     diqiGetBalance(_diqi.address, callback)
 }
+
+function diqiPay(to_address, amount, callback, errorCallback) {
+    var param = {'from_address': _diqi.address, 'to_address': to_address, 'color_id': _diqi.color, 'amount': amount}
+    jQuery.ajax('https://api.diqi.us/api/v0/payments', {
+        method: 'POST',
+        headers: {
+            'Authorization': ('Token '+_diqi.token)
+        },
+        data: param,
+        success: function(data) {
+            console.log(data)
+            if (callback) callback(data)
+        },
+        error: errorCallback
+    })
+}

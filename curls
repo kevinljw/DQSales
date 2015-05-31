@@ -1,0 +1,76 @@
+curl -X POST \
+-d "username=acorn&password=17D87q6Z70344z9sry3ZEb1680wSbU17vqj760b7yA599kkgC792706VPczD3z8I" \
+https://api.diqi.us/api/v0/accounts
+
+{"created_at": "2015-05-31T03:04:42.789Z", "address": "1BxzQZGtYqP1GRpBydBPBifNwJRzwhFrop"}
+
+curl -v -X POST \
+-d "username=acorn&password=17D87q6Z70344z9sry3ZEb1680wSbU17vqj760b7yA599kkgC792706VPczD3z8I" \
+https://api.diqi.us/api/v0/accounts/token
+
+{"token": "60a3d25d5971b0beb9d2822321335e380edcaf22"}
+
+curl -X POST \
+-H "Authorization: Token 60a3d25d5971b0beb9d2822321335e380edcaf22" \
+https://api.diqi.us/api/v0/accounts/addresses
+
+{"address": "1EQhbYZjemugYCQ5fNtmro1svngMSqRei4"}
+
+curl -L -X POST \
+-H "Authorization: Token 60a3d25d5971b0beb9d2822321335e380edcaf22" \
+http://api.diqi.us/api/v0/issuers/1EQhbYZjemugYCQ5fNtmro1svngMSqRei4
+
+{"message": "1EQhbYZjemugYCQ5fNtmro1svngMSqRei4 is now an issuer, color_id: 20", "color_id": 20}
+
+curl -L -X POST \
+-H "Authorization: Token 60a3d25d5971b0beb9d2822321335e380edcaf22" \
+-d "color_id=20&amount=100000" \
+https://api.diqi.us/api/v0/issuers/mint
+
+{"message": "Mint 100000 of color 20 success"}
+
+curl -X GET  https://api.diqi.us/api/v0/analytics/addresses/1EQhbYZjemugYCQ5fNtmro1svngMSqRei4/color/20
+
+{
+    "hash": "1EQhbYZjemugYCQ5fNtmro1svngMSqRei4",
+    "balances": [
+        {
+            "color": "20",
+            "balance": 100000.0,
+            "received": 100000.0,
+            "sent": 0
+        }
+    ]
+}
+
+
+
+
+
+
+
+curl -X POST \
+-d "username=acorn-buyer&password=buyer" \
+https://api.diqi.us/api/v0/accounts
+
+curl -v -X POST \
+-d "username=acorn-buyer&password=buyer" \
+https://api.diqi.us/api/v0/accounts/token
+
+curl -X POST \
+-H "Authorization: Token 629181af567c6cfd8a6e5e5a524eb99d5ddfd349" \
+https://api.diqi.us/api/v0/accounts/addresses
+
+
+curl -X GET  https://api.diqi.us/api/v0/analytics/addresses/12Wj1vUynH52TsywjkGk6hLHhHnEnMFGQ1/color/20
+
+
+# transfer
+
+curl -X POST  -H "Authorization: Token 60a3d25d5971b0beb9d2822321335e380edcaf22" \
+-d "from_address=1EQhbYZjemugYCQ5fNtmro1svngMSqRei4&to_address=12Wj1vUynH52TsywjkGk6hLHhHnEnMFGQ1&color_id=20&amount=10" \
+https://api.diqi.us/api/v0/payments
+
+{"tx_hash": "053d7101b154ef373707f645f62c6054c43fca22e75eaa4402873a62c001aaa5", "message": "success"}
+
+curl -X GET  https://api.diqi.us/api/v0/analytics/addresses/12Wj1vUynH52TsywjkGk6hLHhHnEnMFGQ1/color/20
