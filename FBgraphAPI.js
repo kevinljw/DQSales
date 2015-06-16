@@ -68,7 +68,7 @@ function ShowContent(targetURL){
 ////                    console.log(salesProduct);
 //                    
 //                }
-                    document.getElementById("bcont").innerHTML+="<tr onclick=\"display('"+thisAccountMatch[1].trim()+"')\"><th><img src=\""+getFromId(thisAccountMatch[1].trim()).Pic+"\" ></th><th>"+thisItemMatch[1]+"</th><th>"+thisPriceMatch[1]+"</th><th>"+thisAccountMatch[1]+"</th></tr>";
+                    document.getElementById("bcont").innerHTML+="<div class=\"buyEachItem\" onclick=\"display('"+thisAccountMatch[1].trim()+"')\"><div><img src=\""+getFromId(thisAccountMatch[1].trim()).Pic+"\" class=\"buyEachImg\" width=\"300px;\"></div><div class=\"itemMatch\">"+thisItemMatch[1]+"</div><div class=\"priceMatch\">"+thisPriceMatch[1]+"</div>";
                         
                 }
                 

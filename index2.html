@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+<html lang="en">
+
+
+
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="Acorn.css">
+	<script src="FBgraphAPI.js"></script>
+	<script src="diqi.js"></script>
+	<script src="jquery-2.1.4.min.js"></script>
+
+	<title>Acorn</title>
+
+     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+
+</head>
+<script>
+function init(){
+   var cookieValue = readCookie("token");
+	if(cookieValue!=null){
+        document.getElementById("loginRegisterDiv").style.display='none';
+		document.getElementById("productsDiv").style.display='block';
+		document.getElementById("infoDiv").style.display='block';
+        _diqi.token=cookieValue;
+	}
+
+	
+}
+    function display(id){
+        document.getElementById("productsDiv").style.display='none';
+        document.getElementById("productDetailDiv").style.display='block';
+        var infoArray=getFromId(id);
+          console.log(getFromId(id));
+        document.getElementById("productName").innerHTML = infoArray.Name;
+        document.getElementById("productPrice").innerHTML = infoArray.Price;
+        document.getElementById("productPicture").src = infoArray.Pic;
+        document.getElementById("productId").src = id;
+        
+    }
+    function purchase(){
+        
+        diqiPay(document.getElementById("productId").innerHTML,document.getElementById("productPrice").innerHTML);
+        
+    }
+function createCookie(name, value, days) {
+    var expires;
+
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    } else {
+        expires = "";
+    }
+	
+    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = encodeURIComponent(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+}
+function Login() {
+    document.getElementById("loginRegisterDiv").style.display='none';
+	document.getElementById("loginDiv").style.display='block';
+	
+}
+function diqiLogin2() {
+  document.getElementById("loginDiv").style.display='none';
+  var Passt = document.getElementById('pass');
+        var Name = document.getElementById('account');
+        var userPass = Passt.value;
+        var userName = Name.value;
+  
+  diqiLogin(userName,userPass, function() {
+  createCookie("token",_diqi.token,90);
+  document.getElementById("productsDiv").style.display='block';
+  document.getElementById("infoDiv").style.display='block';
+  });
+  
+}
+
+function getBalance(){
+	document.getElementById("productsDiv").style.display='none';
+	document.getElementById("balanceDiv").style.display='block';
+    document.getElementById("productDetailDiv").style.display='none';
+    document.getElementById("sellDiv").style.display='none';
+    diqiGetPrimaryAddress(function(addr, bal) {
+        bal.balance;
+        document.getElementById("balanceText").innerHTML="Your current Acorn balance is:"+bal.balance;
+    });
+	
+}
+
+function showProducts(){
+
+	document.getElementById("productsDiv").style.display='block';
+	document.getElementById("balanceDiv").style.display='none';
+    document.getElementById("productDetailDiv").style.display='none';
+    document.getElementById("sellDiv").style.display='none';
+	
+
+}
+    function sell(){
+        document.getElementById("productsDiv").style.display='none';
+	document.getElementById("balanceDiv").style.display='none';
+    document.getElementById("productDetailDiv").style.display='none';
+        document.getElementById("sellDiv").style.display='block';
+    }
+    function sellDisplay(){
+        document.getElementById("productsDiv").style.display='none';
+	document.getElementById("balanceDiv").style.display='none';
+    document.getElementById("productDetailDiv").style.display='none';
+        document.getElementById("sellDiv").style.display='block';
+        diqiCreateAddress(function(add){
+        document.getElementById("sellText").innerHTML="[I] "+document.getElementById("productNameSell").value+"\n[P]  "+document.getElementById("productPriceSell").value+"\n[A] "+add;
+        });
+        Copied = document.getElementById("sellText").createTextRange();
+        Copied.execCommand("Copy");
+
+    }
+
+
+
+
+
+
+
+
+
+</script>
+<body onload="init()">
+     <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top">Acorn</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    
+                    <li class="page-scroll">
+                        <a href="#portfolio" onclick="getBalance()">My Wallet</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about" onclick="showProducts()">Products</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact" onclick="sell()">sell</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+<div id="header">
+<img src="acorn.png" alt="Acorn" style="width:150px;height:100px;float: left;"><h1>Acorn</h1>
+<br />
+</div>
+    
+<div id="loginRegisterDiv">
+<button onclick="Login()">Login</button>
+<button onclick="Register()">Register</button>
+
+</div>
+</div>
+<!--
+<div id="infoDiv" style="display:none">
+<button onclick="getBalance()">My Balance</button>
+<button onclick="showProducts()">Products</button>
+<button onclick="sell()">Sell Something</button>
+-->
+
+    
+    <div id="infoDiv"></div>
+    
+</div>
+    <div id="productDetailDiv" style="display:none">
+<p id="productName"></p>
+        <p id="productPrice"></p>
+        <p id="productId"></p>
+        <img src="" alt="Product picture" id="productPicture">
+        <button onclick="purchase()">Purchase</button>
+        
+</div>
+</div>
+<div id="balanceDiv" style="display:none">
+<p id="balanceText">Your current Acorn balance is: </p>
+
+</div>
+<div id="sellDiv" style="display:none">
+<p><input type="text" id="productNameSell" name="" value="" placeholder="Product Name"></p>
+        <p><input type="text" id="productPriceSell" name="" value="" placeholder="Price"></p>
+        <p class="submit">
+		<input type="submit" name="commit" value="Sell" onclick="sellDisplay()" ></p>
+    <p>please copy the following text to Facebook<br></p>
+    <textarea rows="5" cols="50" wrap="hard" id="sellText"></textarea>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="loginDiv" style="display:none">
+        <p><input type="text" id="account" name="Account" value="" placeholder="Account"></p>
+        <p><input type="password" id="pass" name="password" value="" placeholder="Password"></p>
+        <p class="remember_me">
+          <label>
+            <input type="checkbox" name="remember_me" id="remember_me">
+            Remember me on this computer
+          </label>
+        </p>	
+        <p class="submit">
+		<input type="submit" name="commit" value="Login" onclick="diqiLogin2()" ></p>
+ 
+</div>
+<div id="productsDiv">
+<h2>Products</h2>
+<table id="bcont">
+
+</table>
+</div>
+
+
+
+
+</body>
+
+
+
+</html>
+
+

@@ -1,29 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 
         "http://www.w3.org/TR/html4/loose.dtd">
-
-
-
-<html lang="en">
-
-
-
 <head>
-
-
 
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="Acorn.css">
 	<script src="FBgraphAPI.js"></script>
 	<script src="diqi.js"></script>
+    <script src="js/pages.js"></script>
 	<script src="jquery-2.1.4.min.js"></script>
 
 	<title>Acorn</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/freelancer.css" rel="stylesheet">
+    
+    <link href="css/myDefined.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -31,146 +25,9 @@
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
 </head>
-<script>
-function init(){
-   var cookieValue = readCookie("token");
-	if(cookieValue!=null){
-        document.getElementById("loginRegisterDiv").style.display='none';
-		document.getElementById("productsDiv").style.display='block';
-		document.getElementById("infoDiv").style.display='block';
-        _diqi.token=cookieValue;
-        diqiGetPrimaryAddress(function(addr, bal) {
-        bal.balance;
-        document.getElementById("balanceText").innerHTML="Your current Acorn balance is:"+bal.balance;
-    });
-	}
 
-	
-}
-    function display(id){
-        console.log(id);
-        document.getElementById("productsDiv").style.display='none';
-        document.getElementById("productDetailDiv").style.display='block';
-        var infoArray=getFromId(id);
-          console.log(getFromId(id));
-        document.getElementById("productName").innerHTML = infoArray.Name;
-        document.getElementById("productPrice").innerHTML = infoArray.Price;
-        document.getElementById("productPicture").src = infoArray.Pic;
-        document.getElementById("productId").innerHTML = id;
-        
-    }
-    function purchase(){
-        console.log("hllo "+document.getElementById("productId").innerHTML);
-        diqiGetBalance(document.getElementById("productId").innerHTML,function(add,bal){
-            console.log("rein"+bal);
-        if(bal.balance>0){
-            alert("Item has been sold");
-            
-        }else{
-        diqiPay(document.getElementById("productId").innerHTML,document.getElementById("productPrice").innerHTML.replace("$",""),function(){
-        alert("Success");
-        location.reload();
-        },function(){alert("Failure");
-        location.reload();});
-        }
-        });
-        
-        
-        
-        
-    }
-function createCookie(name, value, days) {
-    var expires;
-
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    } else {
-        expires = "";
-    }
-	
-    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
-}
-
-function readCookie(name) {
-    var nameEQ = encodeURIComponent(name) + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
-    }
-    return null;
-}
-function Login() {
-    document.getElementById("loginRegisterDiv").style.display='none';
-	document.getElementById("loginDiv").style.display='block';
-	
-}
-function diqiLogin2() {
-  document.getElementById("loginDiv").style.display='none';
-  var Passt = document.getElementById('pass');
-        var Name = document.getElementById('account');
-        var userPass = Passt.value;
-        var userName = Name.value;
-  
-  diqiLogin(userName,userPass, function() {
-  createCookie("token",_diqi.token,90);
-  document.getElementById("productsDiv").style.display='block';
-  document.getElementById("infoDiv").style.display='block';
-  });
-  
-}
-
-function getBalance(){
-	document.getElementById("productsDiv").style.display='none';
-	document.getElementById("balanceDiv").style.display='block';
-    document.getElementById("productDetailDiv").style.display='none';
-    document.getElementById("sellDiv").style.display='none';
-    diqiGetPrimaryAddress(function(addr, bal) {
-        bal.balance;
-        document.getElementById("balanceText").innerHTML="Your current Acorn balance is:"+bal.balance;
-    });
-	
-}
-
-function showProducts(){
-	document.getElementById("productsDiv").style.display='block';
-	document.getElementById("balanceDiv").style.display='none';
-    document.getElementById("productDetailDiv").style.display='none';
-    document.getElementById("sellDiv").style.display='none';
-	
-}
-    function sell(){
-        document.getElementById("productsDiv").style.display='none';
-	document.getElementById("balanceDiv").style.display='none';
-    document.getElementById("productDetailDiv").style.display='none';
-        document.getElementById("sellDiv").style.display='block';
-    }
-    function sellDisplay(){
-        document.getElementById("productsDiv").style.display='none';
-	document.getElementById("balanceDiv").style.display='none';
-    document.getElementById("productDetailDiv").style.display='none';
-        document.getElementById("sellDiv").style.display='block';
-        diqiCreateAddress(function(add){
-        document.getElementById("sellText").innerHTML="[I] "+document.getElementById("productNameSell").value+"\n[P] "+document.getElementById("productPriceSell").value+"\n[A] "+add;
-        });
-        Copied = document.getElementById("sellText").createTextRange();
-        Copied.execCommand("Copy");
-
-    }
-
-
-
-
-
-
-
-
-
-</script>
 <body onload="init()">
+    
      <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -193,13 +50,13 @@ function showProducts(){
                         <a href="#page-top"></a>
                     </li>
                     
-                    <li class="page-scroll">
+                    <li class="page-scroll button_y">
                         <a href="#portfolio" onclick="getBalance()">My Wallet</a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="page-scroll button_y">
                         <a href="#about" onclick="showProducts()">Products</a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="page-scroll button_y">
                         <a href="#contact" onclick="sell()">sell</a>
                     </li>
                 </ul>
@@ -213,40 +70,43 @@ function showProducts(){
     
 </div>
     
-<div id="loginRegisterDiv">
-<button onclick="Login()">Login</button>
-<button onclick="Register()">Register</button>
+    <div id="loginRegisterDiv">
+        <button onclick="Login()">Login</button>
+        <button onclick="Register()">Register</button>
+    </div>
 
-</div>
-</div>
 <div id="infoDiv">
-<!--
-<button onclick="getBalance()">My Balance</button>
-<button onclick="showProducts()">Products</button>
-<button onclick="sell()">Sell Something</button>
--->
 
 </div>
+
     <div id="productDetailDiv" style="display:none">
-<p id="productName"></p>
+        <div class="bk_y">PURCHASE</div>
+        <img class="ProPic" src="" alt="Product picture" id="productPicture">
+        <p id="productName"></p>
+        
         <p id="productPrice"></p>
         <p id="productId"></p>
-        <img src="" alt="Product picture" id="productPicture">
-        <button onclick="purchase()">Purchase</button>
         
-</div>
-</div>
+        <button onclick="purchase()" class="purchaseBtn">Purchase</button>
+        
+    </div>
+
 <div id="balanceDiv" style="display:none">
-<p id="balanceText">Your current Acorn balance is: </p>
+    <img class="balImg" src="my_wallet_18.png">
+    <p id="balanceText">YOUR CURRENT ACORN<br><div class="balShow"></div></p>
 
 </div>
+    
 <div id="sellDiv" style="display:none">
-<p><input type="text" id="productNameSell" name="" value="" placeholder="Product Name"></p>
-        <p><input type="text" id="productPriceSell" name="" value="" placeholder="Price"></p>
-        <p class="submit">
-		<input type="submit" name="commit" value="Sell" onclick="sellDisplay()" ></p>
-    <p>please copy the following text to Facebook<br></p>
-    <textarea rows="5" cols="50" wrap="hard" id="sellText"></textarea>
+    <div class="bk_y">SELL</div>
+    <p><div class="blueBar"><span>ITEMS</span><input type="text" class="inputText" id="productNameSell" name="" value="" size="20" placeholder="Product Name"></div>
+    </p>
+    <p><div class="blueBar2"><span>PRICE</span><input type="text" class="inputText" id="productPriceSell" name="" value="" size="20" placeholder="Price"></div>
+    </p>
+    <p class="submit"><input class="sellSubmit" type="submit" name="commit" value="SELL" onclick="sellDisplay()" >
+    </p>
+        <p style="color: #fff; ">Copy to Facebook<br></p>
+        <textarea class="copyToFB" cols="30" rows="4" cols="50" wrap="hard" id="sellText"></textarea>
 
 </div>
 
@@ -271,11 +131,12 @@ function showProducts(){
 		<input type="submit" name="commit" value="Login" onclick="diqiLogin2()" ></p>
  
 </div>
+    
 <div id="productsDiv" style="display:none">
-<h2>Products</h2>
-<table id="bcont">
 
-</table>
+    <table id="bcont">
+
+    </table>
 </div>
 
 
